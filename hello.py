@@ -1,7 +1,12 @@
-from flask import Flask, request, make_response, redirect
+from flask import Flask, request, make_response, redirect, render_template, url_for
 
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 app = Flask(__name__)
+
+bootstrap = Bootstrap(app)
+moment = Moment(app11)
 
 
 @app.route('/')
@@ -36,5 +41,26 @@ def errors():
 def responses():
     response = make_response('<h1>This document carries a cookie!</h1>')
     # response.set_cookie('answer', 42)
-    response.status_code
     return response
+
+
+@app.route('/redirect')
+def redict():
+    return redirect('https://www.baidu.com')
+
+
+@app.route('/jinja')
+def jinja():
+    return render_template('index.html', name='浩哥哥')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+
